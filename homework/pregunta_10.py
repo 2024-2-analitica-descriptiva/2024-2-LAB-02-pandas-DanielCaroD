@@ -25,11 +25,8 @@ def pregunta_10():
 
     df = pd.read_table("files/input/tbl0.tsv")
 
-    data = {}
+    result = df.groupby("c1")["c2"].apply(lambda x: ":".join(map(str, x))).to_frame()
 
-    for c1, c2 in df.groupby("c1")["c2"]:
-        data[c1] = ":".join(map(str, c2))
-    
-    result = pd.DataFrame(list(data.items()), columns=["c1", "c2"])
+    result.set_index("c1", inplace=True)
 
     return result
